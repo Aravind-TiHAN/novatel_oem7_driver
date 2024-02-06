@@ -21,9 +21,3 @@ uint8                           reserved
 BestExtendedSolutionStatus      ext_sol_stat
 uint8                           galileo_beidou_sig_mask
 uint8                           gps_glonass_sig_mask
-
-
-
-
-
-

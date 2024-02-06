@@ -119,6 +119,7 @@ topic_config = \
     NS + "bestvel":  0.1,
     NS + "bestutm":  1.0,
     NS + "ppppos":   1.0,
+    NS + "bestxyz":  0.1,
     NS + "terrastarinfo":     1.0,
     NS + "terrastarstatus":   1.0,
     NS + "time":     1.0,

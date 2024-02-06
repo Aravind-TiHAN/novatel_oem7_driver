@@ -19,6 +19,7 @@ add_message_files(DIRECTORY msg FILES
   Oem7Header.msg
   BESTGNSSPOS.msg
   BESTPOS.msg
+  BESTXYZ.msg
   BESTUTM.msg
   PPPPOS.msg
   TERRASTARSTATUS.msg

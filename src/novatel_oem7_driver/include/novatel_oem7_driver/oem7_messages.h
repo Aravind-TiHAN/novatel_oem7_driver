@@ -149,6 +149,41 @@ namespace novatel_oem7_driver
     uint8_t            gps_glonass_sig_mask;
    };
    static_assert(sizeof(BESTPOSMem) == 72, ASSERT_MSG);
+   
+   struct __attribute__((packed))
+  BESTXYZMem
+  {
+    oem7_enum_t        p_sol_status;
+    oem7_enum_t        pos_type;
+    double             p_x;
+    double             p_y;
+    double             p_z;
+    float              p_x_stdev;
+    float              p_y_stdev;
+    float              p_z_stdev;
+    oem7_enum_t	v_sol_status
+    oem7_enum_t	vel_type
+    double             v_x;
+    double             v_y;
+    double             v_z;
+    float              v_x_stdev;
+    float              v_y_stdev;
+    float              v_z_stdev;
+    oem7_char_t        stn_id[4];
+    float		v_latency	
+    float              diff_age;
+    float              sol_age;
+    uint8_t            num_svs;
+    uint8_t            num_sol_svs;
+    uint8_t            num_sol_l1_svs;
+    uint8_t            num_sol_multi_svs;
+    oem7_hex_t         reserved;
+    oem7_hex_t         ext_sol_stat;
+    oem7_hex_t            galileo_beidou_sig_mask;
+    oem7_hex_t            gps_glonass_sig_mask;
+   };
+    
+   static_assert(sizeof(BESTXYZMem) == 112, ASSERT_MSG);
 
 
   struct __attribute__((packed))
@@ -454,6 +489,7 @@ namespace novatel_oem7_driver
     uint32_t           aux4_stat_set;
     uint32_t           aux4_stat_clr;
   };
+  
   static_assert(sizeof(RXSTATUSMem) == 88, ASSERT_MSG);
 
 
@@ -491,6 +527,8 @@ namespace novatel_oem7_driver
     uint32_t system;
     float    tdop;
   };
+  
+  
 
   struct __attribute__((packed))
   RAWIMUSXMem

@@ -48,6 +48,7 @@
 #include "novatel_oem7_msgs/CORRIMU.h"
 #include "novatel_oem7_msgs/RXSTATUS.h"
 #include "novatel_oem7_msgs/TIME.h"
+#include "novatel_oem7_msgs/BESTXYZ.h"
 
 
 
@@ -203,6 +204,50 @@ MakeROSMessage<novatel_oem7_msgs::BESTPOS>(
 
   static const std::string name = "BESTPOS";
   SetOem7Header(msg, name, bestpos->nov_header);
+}
+
+template<>
+void
+MakeROSMessage<novatel_oem7_msgs::BESTXYZ>(
+    const Oem7RawMessageIf::ConstPtr& msg,
+    boost::shared_ptr<novatel_oem7_msgs::BESTXYZ>& bestxyz)
+{
+  assert(msg->getMessageId() == BESTXYZ_OEM7_MSGID);
+
+  const BESTXYZMem* bp = reinterpret_cast<const BESTXYZMem*>(msg->getMessageData(OEM7_BINARY_MSG_HDR_LEN));
+  bestxyz.reset(new novatel_oem7_msgs::BESTXYZ);
+
+  bestxyz->sol_status.status      = bx->sol_status;
+  bestxyz->pos_type.type          = bx->pos_type;
+  bestxyz->p_x                    = bx->p_x;
+  bestxyz->p_y                    = bx->p_y;
+  bestxyz->p_z                    = bx->p_z;
+  bestxyz->p_x_stdev              = bx->p_x_stdev;
+  bestxyz->p_y_stdev              = bx->p_y_stdev;
+  bestxyz->p_z_stdev              = bx->p_z_stdev;
+  bestxyz->v_sol_status.status    = bx->v_sol_status;
+  bestxyz->vel_type.type          = bx->vel_type;
+  bestxyz->v_x                    = bx->v_x;
+  bestxyz->v_y                    = bx->v_y;
+  bestxyz->v_z                    = bx->v_z;
+  bestxyz->v_x_stdev              = bx->v_x_stdev;
+  bestxyz->v_y_stdev              = bx->v_y_stdev;
+  bestxyz->v_z_stdev              = bx->v_z_stdev;
+  bestxyz->stn_id.assign(           bx->stn_id, arr_size(bp->stn_id));
+  bestxyz->v_latency              = bx->v_latency;
+  bestxyz->diff_age               = bx->diff_age;
+  bestxyz->sol_age                = bx->sol_age;
+  bestxyz->num_svs                = bx->num_svs;
+  bestxyz->num_sol_svs            = bx->num_sol_svs;
+  bestxyz->num_sol_l1_svs         = bx->num_sol_l1_svs;
+  bestxyz->num_sol_multi_svs      = bx->num_sol_multi_svs;
+  bestxyz->reserved               = bx->reserved;
+  bestxyz->ext_sol_stat.status    = bx->ext_sol_stat;
+  bestxyz->galileo_beidou_sig_mask= bx->galileo_beidou_sig_mask;
+  bestxyz->gps_glonass_sig_mask   = bx->gps_glonass_sig_mask;
+
+  static const std::string name = "BESTXYZ";
+  SetOem7Header(msg, name, bestxyz->nov_header);
 }
 
 template<>
@@ -646,6 +691,11 @@ MakeROSMessage(const Oem7RawMessageIf::ConstPtr&, boost::shared_ptr<novatel_oem7
 template
 void
 MakeROSMessage(const Oem7RawMessageIf::ConstPtr&, boost::shared_ptr<novatel_oem7_msgs::BESTPOS>&);
+
+
+template
+void
+MakeROSMessage(const Oem7RawMessageIf::ConstPtr&, boost::shared_ptr<novatel_oem7_msgs::BESTXYZ>&);
 
 template
 void

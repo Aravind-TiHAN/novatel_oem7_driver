@@ -22,5 +22,5 @@ INSSTDEV:   {topic: /novatel/oem7/insstdev,   frame_id: gps,  queue_size: "10"}
 INSCONFIG:  {topic: /novatel/oem7/insconfig,  frame_id: gps,  queue_size: "10"}
 RXSTATUS:   {topic: /novatel/oem7/rxstatus,   frame_id: gps,  queue_size: "10"}
 TIME:       {topic: /novatel/oem7/time,       frame_id: gps} 
-
+BESTXYZ:    {topic: /novatel/oem7/bestxyz,    frame_id: gps}
 

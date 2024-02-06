@@ -50,6 +50,7 @@ namespace novatel_oem7_driver
   const int RXSTATUS_OEM7_MSGID           =   93;
   const int TIME_OEM7_MSGID               =  101;
   const int RAWIMUSX_OEM7_MSGID           =  1462;
+  const int BESTXYZ_OEM7_MSGID            =   241;
 
   // NMEA0183
   const int GLMLA_OEM7_MSGID              =   859;

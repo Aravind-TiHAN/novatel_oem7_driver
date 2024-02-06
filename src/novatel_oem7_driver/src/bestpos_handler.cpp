@@ -50,6 +50,8 @@
 #include "novatel_oem7_msgs/TERRASTARSTATUS.h"
 #include "novatel_oem7_msgs/INSPVA.h"
 #include "novatel_oem7_msgs/INSPVAX.h"
+#include "novatel_oem7_msgs/BESTXYZ.h"
+
 
 #include "nav_msgs/Odometry.h"
 #include "gps_common/GPSFix.h"
@@ -365,6 +367,8 @@ namespace novatel_oem7_driver
     Oem7RosPublisher TERRASTARINFO_pub_;
     Oem7RosPublisher TERRASTARSTATUS_pub_;
     Oem7RosPublisher INSPVA_pub_;
+    Oem7RosPublisher BESTXYZ_pub_;
+    
 
     Oem7RosPublisher GPSFix_pub_;
     Oem7RosPublisher NavSatFix_pub_;
@@ -448,6 +452,17 @@ namespace novatel_oem7_driver
 
       BESTPOS_pub_.publish(bestpos_);
     }
+    
+    
+    void publishBESTXYZ(Oem7RawMessageIf::ConstPtr msg)
+    {
+      MakeROSMessage(msg, bestxyz_);
+      updatePeriod(bestxyz_, last_bestxyz_, bestxyz_period_);
+
+
+      BESTXYZ_pub_.publish(bestxyz_);
+    }
+
 
     void publishBESTVEL(Oem7RawMessageIf::ConstPtr msg)
     {
@@ -815,6 +830,9 @@ namespace novatel_oem7_driver
       GPSFix_pub_.setup<gps_common::GPSFix>(         "GPSFix",    nh);
       NavSatFix_pub_.setup<sensor_msgs::NavSatFix>(  "NavSatFix", nh);
       Odometry_pub_.setup<nav_msgs::Odometry>(       "Odometry",  nh);
+      BESTXYZ_pub_.setup<novatel_oem7_msgs::BESTXYZ>("BESTXYZ",   nh);
+      
+      
 
       nh.param<std::string>("base_frame", base_frame_, "base_link");
 
@@ -849,6 +867,7 @@ namespace novatel_oem7_driver
                                       TERRASTARSTATUS_OEM7_MSGID,
                                       INSPVAS_OEM7_MSGID,
                                       INSPVAX_OEM7_MSGID,
+                                      BESTXYZ_OEM7_MSGID,
                                       PSRDOP2_OEM7_MSGID
                                     });
       return MSG_IDS;
@@ -871,6 +890,16 @@ namespace novatel_oem7_driver
         publishBESTPOS(msg);
 
         if(isShortestPeriod(bestpos_period_))
+        {
+          publishROSMessages();
+        }
+      }
+      
+      if(msg->getMessageId() == BESTXYZ_OEM7_MSGID)
+      {
+        publishBESTXYZ(msg);
+
+        if(isShortestPeriod(bestXYZ_period_))
         {
           publishROSMessages();
         }
